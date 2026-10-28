@@ -1,9 +1,28 @@
-void setup() {
-  // put your setup code here, to run once:
+#include <Servo.h>
 
+Servo lowerServo;
+Servo upperServo;
+
+String command = String("");
+
+// placeholders because idk what pins we're using
+const int lowerPin = 1;
+const int upperPin = 2;
+
+void setup() {
+  lowerServo.attach(lowerPin);
+  upperServo.attach(upperPin);
+
+  // default/starting position for servos
+  lowerServo.write(0);
+  upperServo.write(0);
+
+  Serial.begin(9600);
+  
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
+  command = Serial.readStringUntil('\n');
+  command.trim();
 
 }
