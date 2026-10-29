@@ -15,7 +15,7 @@ void setup() {
 
   // default/starting position for servos
   lowerServo.write(0);
-  upperServo.write(0);
+  upperServo.write(90);
 
   Serial.begin(9600);
   
