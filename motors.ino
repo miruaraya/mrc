@@ -1,95 +1,123 @@
-const int IN1 = 7;
-const int IN2 = 8;
+const int LF = 7;
+const int LB = 8;
 const int ENA = 9; 
 
-const int IN3 = 11;
-const int IN4 = 12;
-const int ENA2 = 13; //idk if this is actually the pwm pin its placeholder
+const int RF = 10;
+const int RB = 12;
+const int ENA2 = 11; //idk if this is actually the pwm pin its placeholder
 
 void setup() {
   // Left motor pins
-  pinMode(IN1, OUTPUT);
-  pinMode(IN2, OUTPUT);
+  pinMode(LF, OUTPUT);
+  pinMode(LB, OUTPUT);
   pinMode(ENA, OUTPUT);
 
  // Right motor pins
-  pinMode(IN3, OUTPUT);
-  pinMode(IN4, OUTPUT);
+  pinMode(RF, OUTPUT);
+  pinMode(RB, OUTPUT);
   pinMode(ENA2, OUTPUT);
 
   Serial.begin(9600);
 
   // Default state is off
-  digitalWrite(IN1, LOW);
-  digitalWrite(IN2, LOW);
-  digitalWrite(IN3, LOW);
-  digitalWrite(IN4, LOW);
+  digitalWrite(LF, LOW);
+  digitalWrite(LB, LOW);
+  digitalWrite(RF, LOW);
+  digitalWrite(RB, LOW);
 
   Serial.println(">> READY");
-}
 
-String currentCommand = String("");
 
 void loop() {
+  // put your main code here, to run repeatedly:
   if (!Serial.available()) {
     return;
   }
 
-  // Read command until newline
+// Read command until newline
   currentCommand = Serial.readStringUntil('\n');
   currentCommand.trim();
 
-  if (currentCommand == "Forward") {
-    // Left and right motors forward
-    digitalWrite(IN1, HIGH);
-    digitalWrite(IN2, LOW);
-    digitalWrite(IN3, HIGH);
-    digitalWrite(IN4, LOW);
-
-    Serial.println(">> FORWARD");
-  }
-
-  else if (currentCommand == "Back") {
-    // Left and right motors reverse
-    digitalWrite(IN1, LOW);
-    digitalWrite(IN2, HIGH);
-    digitalWrite(IN3, LOW);
-    digitalWrite(IN4, HIGH);
-
-    Serial.println(">> BACK");
-  }
-
-  else if (currentCommand == "Right") {
-    // Left forward, right reverse
-    digitalWrite(IN1, HIGH);
-    digitalWrite(IN2, LOW);
-    digitalWrite(IN3, LOW);
-    digitalWrite(IN4, HIGH);
-
-    Serial.println(">> RIGHT");
-  }
-
-  else if (currentCommand == "Left") {
-    // Left reverse, right forward
-    digitalWrite(7, LOW);
-    digitalWrite(8, HIGH);
-    digitalWrite(10, HIGH);
-    digitalWrite(11, LOW);
-
-    Serial.println(">> LEFT");
-  }
-
-  else if (currentCommand == "Stop") {
+//command control
+  if (currentCommand == "F") {
+  moveForward();
+}
+  else if (currentCommand == "B") {
+  moveBackward();
+}
+  else if (currentCommand == "L") {
+  turnLeft();
+}
+  else if (currentCommand == "R") {
+  turnRight();
+}
+  else if (currentCommand == "S") {
     // Stop both motor sides
-    digitalWrite(IN1, LOW);
-    digitalWrite(IN2, LOW);
-    digitalWrite(IN3, LOW);
-    digitalWrite(IN4, LOW);
-
-    Serial.println(">> STOP");
-  }
+   stopMotors();
 
   else {
     Serial.println(">> UNKNOWN COMMAND");
   }
+
 }
+
+
+void moveForward() {
+  digitalWrite(LF, HIGH);
+  digitalWrite(LB, LOW);
+
+  digitalWrite(RF, HIGH);
+  digitalWrite(RB, LOW);
+
+  analogWrite(ENA, 255);
+  analogWrite(ENA2, 255);
+
+  delay(500);
+
+  stopMotors();
+}
+
+void moveBackward() {
+  digitalWrite(LF, LOW);
+  digitalWrite(LB, HIGH);
+
+  digitalWrite(RF, LOW);
+  digitalWrite(RB, HIGH);
+
+  analogWrite(ENA, 255);
+  analogWrite(ENA2, 255);
+
+  delay(500);
+
+  stopMotors();
+}
+
+void turnLeft() {
+
+    // Left reverse, right forward
+    digitalWrite(LF, LOW);
+    digitalWrite(LB, LOW);
+    digitalWrite(RF, HIGH);
+    digitalWrite(RB, HIGH);
+
+}
+
+void turnRight() {
+    digitalWrite(LF, HIGH);
+    digitalWrite(LB, HIGH);
+    digitalWrite(RF, LOW);
+    digitalWrite(RB, LOW);
+}
+
+
+void stopMotors() {
+
+    // Stop both motor sides
+    digitalWrite(LF, LOW);
+    digitalWrite(LB, LOW);
+    digitalWrite(RF, LOW);
+    digitalWrite(RB, LOW);
+  
+}
+
+
