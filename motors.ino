@@ -96,6 +96,7 @@ void turnLeft() {
     // Left reverse, right forward
     digitalWrite(LF, LOW);
     digitalWrite(LB, LOW);
+  
     digitalWrite(RF, HIGH);
     digitalWrite(RB, HIGH);
 
@@ -105,6 +106,7 @@ void turnRight() {
   //left forward, right reverse
     digitalWrite(LF, HIGH);
     digitalWrite(LB, HIGH);
+  
     digitalWrite(RF, LOW);
     digitalWrite(RB, LOW);
 }
@@ -114,6 +116,7 @@ void stopMotors() {
     // Stop both motor sides
     digitalWrite(LF, LOW);
     digitalWrite(LB, LOW);
+  
     digitalWrite(RF, LOW);
     digitalWrite(RB, LOW);
   
