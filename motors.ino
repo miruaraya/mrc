@@ -93,7 +93,6 @@ void moveBackward() {
 }
 
 void turnLeft() {
-
     // Left reverse, right forward
     digitalWrite(LF, LOW);
     digitalWrite(LB, LOW);
@@ -103,6 +102,7 @@ void turnLeft() {
 }
 
 void turnRight() {
+  //left forward, right reverse
     digitalWrite(LF, HIGH);
     digitalWrite(LB, HIGH);
     digitalWrite(RF, LOW);
@@ -111,7 +111,6 @@ void turnRight() {
 
 
 void stopMotors() {
-
     // Stop both motor sides
     digitalWrite(LF, LOW);
     digitalWrite(LB, LOW);
