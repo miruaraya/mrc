@@ -1,10 +1,10 @@
-const int LF = 7; // 12 and 13
-const int LB = 8;
-const int ENA = 9; // 11
+const int LF = 12; // 12 and 13
+const int LB = 13;
+const int ENA = 11; // 11
 
-const int RF = 10; // 2 and 7
-const int RB = 12;
-const int ENA2 = 11; // 3
+const int RF = 2; // 2 and 7
+const int RB = 7;
+const int ENA2 = 3; // 3
 
 void setup() {
   // Left motor pins
