@@ -1,10 +1,10 @@
-const int LF = 7;
+const int LF = 7; // 12 and 13
 const int LB = 8;
-const int ENA = 9; 
+const int ENA = 9; // 11
 
-const int RF = 10;
+const int RF = 10; // 2 and 7
 const int RB = 12;
-const int ENA2 = 11; //idk if this is actually the pwm pin its placeholder
+const int ENA2 = 11; // 3
 
 void setup() {
   // Left motor pins
@@ -99,6 +99,10 @@ void turnLeft() {
   
     digitalWrite(RF, HIGH);
     digitalWrite(RB, HIGH);
+    
+    delay(1000);
+
+    stopMotors();
 
 }
 
@@ -109,6 +113,11 @@ void turnRight() {
   
     digitalWrite(RF, LOW);
     digitalWrite(RB, LOW);
+  
+    delay(1000);
+
+    stopMotors();
+  
 }
 
 
