@@ -39,19 +39,19 @@ void loop() {
   currentCommand.trim();
 
 //command control
-  if (currentCommand == "F") {
+  if (currentCommand == "F" || currentCommand == "f") {
   moveForward();
 }
-  else if (currentCommand == "B") {
+  else if (currentCommand == "B" || currentCommand == "b") {
   moveBackward();
 }
-  else if (currentCommand == "L") {
+  else if (currentCommand == "L" || currentCommand == "l") {
   turnLeft();
 }
-  else if (currentCommand == "R") {
+  else if (currentCommand == "R" || currentCommand == "r") {
   turnRight();
 }
-  else if (currentCommand == "S") {
+  else if (currentCommand == "S" || currentCommand == "s") {
     // Stop both motor sides
    stopMotors();
 
