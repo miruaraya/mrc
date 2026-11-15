@@ -105,7 +105,7 @@ void loop() {
   }
 
 // Read command until newline
-  command = Serial.readStringUntil('\n');
+  String command = Serial.readStringUntil('\n');
   command.trim();
 
 //command control
