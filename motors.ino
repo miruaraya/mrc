@@ -6,63 +6,6 @@ const int RF = 2; // 2 and 7
 const int RB = 7;
 const int ENA2 = 3; // 3
 
-void setup() {
-  // Left motor pins
-  pinMode(LF, OUTPUT);
-  pinMode(LB, OUTPUT);
-  pinMode(ENA, OUTPUT);
-
- // Right motor pins
-  pinMode(RF, OUTPUT);
-  pinMode(RB, OUTPUT);
-  pinMode(ENA2, OUTPUT);
-
-  Serial.begin(9600);
-
-  // Default state is off
-  digitalWrite(LF, LOW);
-  digitalWrite(LB, LOW);
-  digitalWrite(RF, LOW);
-  digitalWrite(RB, LOW);
-
-  Serial.println(">> READY");
-}
-
-
-void loop() {
-  // put your main code here, to run repeatedly:
-  if (!Serial.available()) {
-    return;
-  }
-
-// Read command until newline
-  command = Serial.readStringUntil('\n');
-  command.trim();
-
-//command control
-  if (command == "F" || command == "f") {
-  moveForward();
-}
-  else if (command == "B" || command == "b") {
-  moveBackward();
-}
-  else if (command == "L" || command == "l") {
-  turnLeft();
-}
-  else if (command == "R" || command == "r") {
-  turnRight();
-}
-  else if (command == "S" || command == "s") {
-    // Stop both motor sides
-   stopMotors();
-
-  else {
-    Serial.println(">> UNKNOWN COMMAND");
-  }
-
-}
-
-
 void moveForward() {
   digitalWrite(LF, HIGH);
   digitalWrite(LB, LOW);
@@ -132,4 +75,58 @@ void stopMotors() {
   
 }
 
+void setup() {
+  // Left motor pins
+  pinMode(LF, OUTPUT);
+  pinMode(LB, OUTPUT);
+  pinMode(ENA, OUTPUT);
 
+ // Right motor pins
+  pinMode(RF, OUTPUT);
+  pinMode(RB, OUTPUT);
+  pinMode(ENA2, OUTPUT);
+
+  Serial.begin(9600);
+
+  // Default state is off
+  digitalWrite(LF, LOW);
+  digitalWrite(LB, LOW);
+  digitalWrite(RF, LOW);
+  digitalWrite(RB, LOW);
+
+  Serial.println(">> READY");
+}
+
+
+void loop() {
+  // put your main code here, to run repeatedly:
+  if (!Serial.available()) {
+    return;
+  }
+
+// Read command until newline
+  command = Serial.readStringUntil('\n');
+  command.trim();
+
+//command control
+  if (command == "F" || command == "f") {
+  moveForward();
+}
+  else if (command == "B" || command == "b") {
+  moveBackward();
+}
+  else if (command == "L" || command == "l") {
+  turnLeft();
+}
+  else if (command == "R" || command == "r") {
+  turnRight();
+}
+  else if (command == "S" || command == "s") {
+    // Stop both motor sides
+   stopMotors();
+
+  else {
+    Serial.println(">> UNKNOWN COMMAND");
+  }
+
+}
