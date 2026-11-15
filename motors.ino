@@ -26,6 +26,7 @@ void setup() {
   digitalWrite(RB, LOW);
 
   Serial.println(">> READY");
+}
 
 
 void loop() {
