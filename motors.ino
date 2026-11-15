@@ -1,4 +1,4 @@
-const int LF = 10; // 10 and 13 (12 -> 10)
+const int LF = 12; // 12 and 13 
 const int LB = 13;
 const int ENA = 11; // 11
 
