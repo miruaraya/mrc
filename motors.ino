@@ -35,23 +35,23 @@ void loop() {
   }
 
 // Read command until newline
-  currentCommand = Serial.readStringUntil('\n');
-  currentCommand.trim();
+  command = Serial.readStringUntil('\n');
+  command.trim();
 
 //command control
-  if (currentCommand == "F" || currentCommand == "f") {
+  if (command == "F" || command == "f") {
   moveForward();
 }
-  else if (currentCommand == "B" || currentCommand == "b") {
+  else if (command == "B" || command == "b") {
   moveBackward();
 }
-  else if (currentCommand == "L" || currentCommand == "l") {
+  else if (command == "L" || command == "l") {
   turnLeft();
 }
-  else if (currentCommand == "R" || currentCommand == "r") {
+  else if (command == "R" || command == "r") {
   turnRight();
 }
-  else if (currentCommand == "S" || currentCommand == "s") {
+  else if (command == "S" || command == "s") {
     // Stop both motor sides
    stopMotors();
 
