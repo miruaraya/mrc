@@ -1,10 +1,10 @@
-const int LF = 12; // 12 and 13 
-const int LB = 13;
-const int ENA = 11; // 11
+const int LF = 10;
+const int LB = 12;
+const int ENA = 11;
 
-const int RF = 2; // 2 and 7
+const int RF = 2;
 const int RB = 7;
-const int ENA2 = 3; // 3
+const int ENA2 = 3;
 
 void moveForward() {
   digitalWrite(LF, HIGH);
@@ -17,7 +17,6 @@ void moveForward() {
   analogWrite(ENA2, 255);
 
   delay(500);
-
   stopMotors();
 }
 
@@ -32,101 +31,90 @@ void moveBackward() {
   analogWrite(ENA2, 255);
 
   delay(500);
-
   stopMotors();
 }
 
 void turnLeft() {
-    // Left reverse, right forward
-    digitalWrite(LF, LOW);
-    digitalWrite(LB, LOW);
+  // Left reverse, Right forward
+  digitalWrite(LF, LOW);
+  digitalWrite(LB, HIGH);
+
+  digitalWrite(RF, HIGH);
+  digitalWrite(RB, LOW);
+
+  analogWrite(ENA, 255);
+  analogWrite(ENA2, 255);
   
-    digitalWrite(RF, HIGH);
-    digitalWrite(RB, HIGH);
-    
-    delay(1000);
-
-    stopMotors();
-
+  delay(1000);
+  stopMotors();
 }
 
 void turnRight() {
-  //left forward, right reverse
-    digitalWrite(LF, HIGH);
-    digitalWrite(LB, HIGH);
-  
-    digitalWrite(RF, LOW);
-    digitalWrite(RB, LOW);
-  
-    delay(1000);
+  // Left forward, Right reverse
+  digitalWrite(LF, HIGH);
+  digitalWrite(LB, LOW);
 
-    stopMotors();
+  digitalWrite(RF, LOW);
+  digitalWrite(RB, HIGH);
+
+  analogWrite(ENA, 255);
+  analogWrite(ENA2, 255);
   
+  delay(1000);
+  stopMotors();
 }
 
-
 void stopMotors() {
-    // Stop both motor sides
-    digitalWrite(LF, LOW);
-    digitalWrite(LB, LOW);
-  
-    digitalWrite(RF, LOW);
-    digitalWrite(RB, LOW);
-  
+  // Turn off PWM power
+  analogWrite(ENA, 0);
+  analogWrite(ENA2, 0);
+
+  // Set direction pins LOW
+  digitalWrite(LF, LOW);
+  digitalWrite(LB, LOW);
+  digitalWrite(RF, LOW);
+  digitalWrite(RB, LOW);
 }
 
 void setup() {
-  // Left motor pins
   pinMode(LF, OUTPUT);
   pinMode(LB, OUTPUT);
   pinMode(ENA, OUTPUT);
 
- // Right motor pins
   pinMode(RF, OUTPUT);
   pinMode(RB, OUTPUT);
   pinMode(ENA2, OUTPUT);
 
   Serial.begin(9600);
-
-  // Default state is off
-  digitalWrite(LF, LOW);
-  digitalWrite(LB, LOW);
-  digitalWrite(RF, LOW);
-  digitalWrite(RB, LOW);
+  stopMotors();
 
   Serial.println(">> READY");
 }
 
-
 void loop() {
-  // put your main code here, to run repeatedly:
   if (!Serial.available()) {
     return;
   }
 
-// Read command until newline
   String command = Serial.readStringUntil('\n');
   command.trim();
 
-//command control
   if (command == "F" || command == "f") {
-  moveForward();
-}
+    moveForward();
+  }
   else if (command == "B" || command == "b") {
-  moveBackward();
-}
+    moveBackward();
+  }
   else if (command == "L" || command == "l") {
-  turnLeft();
-}
+    turnLeft();
+  }
   else if (command == "R" || command == "r") {
-  turnRight();
-}
+    turnRight();
+  }
   else if (command == "S" || command == "s") {
-    // Stop both motor sides
-   stopMotors();
-
+    stopMotors();
+  } // <-- Added missing closing brace here
   else {
     Serial.println(">> UNKNOWN COMMAND");
   }
-
 }
