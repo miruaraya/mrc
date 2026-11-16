@@ -6,7 +6,7 @@ Servo upperServo;
 String command = String("");
 
 const int lowerPin = 6;
-const int upperPin = 10;
+const int upperPin = 9;
 
 void setup() {
   lowerServo.attach(lowerPin);
