@@ -1,54 +1,26 @@
-#include <Servo.h>
-
-Servo lowerServo;
-Servo upperServo;
-
-String command = String("");
-
-const int lowerPin = 6;
-const int upperPin = 9;
-
-void setup() {
-  lowerServo.attach(lowerPin);
-  upperServo.attach(upperPin);
-
-  // default/starting position for servos
-  lowerServo.write(0);
-  upperServo.write(90);
-
-  Serial.begin(9600);
-  
-}
-
 void loop() {
-  
-  if (!Serial.available()) {
-    return;
-  }
-  
-  command = Serial.readStringUntil('\n');
+  if (!Serial.available()) return;
+
+  String command = Serial.readStringUntil('\n');
   command.trim();
 
-  if (command == "lower(0)") {
-    lowerServo.write(0);
-  } else if (command == "lower(45)") {
-    lowerServo.write(45);
-  } else if (command == "lower(90)") {
-    lowerServo.write(90);
-  } else if (command == "lower(135)") {
-    lowerServo.write(135);
-  } else if (command == "lower(180)") {
-    lowerServo.write(180);
-  } else if (command == "upper(0)") {
-    upperServo.write(0);
-  } else if (command == "upper(45)") {
-    upperServo.write(45);
-  } else if (command == "upper(90)") {
-    upperServo.write(90);
-  } else if (command == "upper(135)") {
-    upperServo.write(135);
-  } else if (command == "upper(180)") {
-    upperServo.write(180);
+  int open = command.indexOf('(');
+  int close = command.indexOf(')');
+  if (open < 0 || close < open) {
+    Serial.println("ERR: bad format");
+    return;
   }
 
+  String name = command.substring(0, open);
+  int angle = constrain(command.substring(open + 1, close).toInt(), 0, 180);
+
+  if (name == "lower") {
+    lowerServo.write(angle);
+  } else if (name == "upper") {
+    upperServo.write(angle);
+  } else {
+    Serial.println("ERR: unknown servo");
+    return;
+  }
+  Serial.println("OK");
 }
